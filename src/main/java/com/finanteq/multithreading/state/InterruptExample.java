@@ -8,7 +8,6 @@ public class InterruptExample {
         thread.start();
         System.out.println(thread.getState());
         thread.interrupt();
-        thread.join();
     }
 
     private static void sleepWell() {

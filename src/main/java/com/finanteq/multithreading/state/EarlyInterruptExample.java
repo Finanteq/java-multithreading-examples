@@ -12,8 +12,6 @@ public class EarlyInterruptExample {
         Thread.sleep(120);
         System.out.println(thread.getState());
         thread.interrupt(); // interrupt when it's sleeping
-
-        thread.join();
     }
 
     private static void doSomethingAndSleep() {
