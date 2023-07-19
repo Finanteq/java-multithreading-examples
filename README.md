@@ -8,6 +8,7 @@ Czasami można znaleźć tutaj dodatkowy kod, rozszerzający materiał w wyżej 
 
 1. [Wielowątkowość w Java - wstęp](https://kariera.finanteq.com/blog/technical-excellence/wielowatkowosc-w-java-wstep/) - brak przykładów
 2. [Wielowątkowość w Java - tworzenie wątków](https://kariera.finanteq.com/blog/technical-excellence/wielowatkowosc-w-java-tworzenie-watkow/) - przykłady w [com.finanteq.multithreading.spawn](src/main/java/com/finanteq/multithreading/spawn).
+3. [Wielowątkowość w Java – stany wątków](https://kariera.finanteq.com/blog/technical-excellence/wielowatkowosc-w-java-stany-watkow/) - przykłady w [com.finanteq.multithreading.state](src/main/java/com/finanteq/multithreading/state).
 
 ## Licencja
 
