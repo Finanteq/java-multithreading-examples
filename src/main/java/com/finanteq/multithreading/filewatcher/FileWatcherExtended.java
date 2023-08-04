@@ -1,11 +1,10 @@
-package com.finanteq.multithreading.state;
+package com.finanteq.multithreading.filewatcher;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class FileWatcher {
+public class FileWatcherExtended {
     public static void main(String[] args) throws InterruptedException {
         System.out.println("FILE DELETION WATCHER");
         System.out.println("Type WATCH <file name> to watch for file deletion.");
@@ -22,16 +21,25 @@ public class FileWatcher {
                 // remove "WATCH" prefix from user input
                 String fileName = line.substring("WATCH ".length());
 
-                Thread thread = new FileWatchThread(fileName);
-                thread.start();
+                Thread existingThread = threads.get(fileName);
+                // If a thread ended its work, then it will not remove itself.
+                // We need to check if thread in the map is still working. If it is, then don't create a new one.
+                if (existingThread != null && existingThread.isAlive()) {
+                    System.out.println("File " + fileName + " is already being watched.");
+                } else {
+                    Thread thread = new FileWatchThread(fileName);
+                    thread.start();
 
-                threads.put(fileName, thread);
+                    threads.put(fileName, thread);
+                }
             } else if (line.startsWith("STOP")) {
                 // remove "STOP" prefix from user input
                 String fileName = line.substring("STOP ".length());
                 Thread thread = threads.get(fileName);
                 if (thread != null) {
-                    thread.interrupt();
+                    if (thread.isAlive()) {
+                        thread.interrupt(); // only working threads should be interrupted
+                    }
                     threads.remove(fileName);
                 } else {
                     System.out.println("File " + fileName + " is not watched.");
@@ -43,32 +51,5 @@ public class FileWatcher {
                 System.out.println("Unknown command: " + line);
             }
         }
-    }
-}
-
-class FileWatchThread extends Thread {
-    private final String fileName;
-
-    FileWatchThread(String fileName) {
-        this.fileName = fileName;
-    }
-
-    @Override
-    public void run() {
-        File file = new File(fileName);
-        if (!file.exists()) {
-            System.out.println("File " + file.getName() + " does not exist!");
-            return;
-        }
-
-        System.out.println("Watching " + file.getName());
-
-        while (file.exists()) {
-            if (Thread.interrupted()) {
-                System.out.println("File " + file.getName() + " is no longer watched.");
-                return;
-            }
-        }
-        System.out.println("File " + file.getName() + " was deleted.");
     }
 }
