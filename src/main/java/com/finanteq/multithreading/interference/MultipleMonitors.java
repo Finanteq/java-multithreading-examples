@@ -36,32 +36,30 @@ class SynchronizedWaiting {
 
     public void waitFor(int ms) {
         synchronized (waitMonitor) {
-            try {
-                Thread.sleep(ms);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            sleep(ms);
         }
     }
 
     public void doSomethingForOneSecond() {
         synchronized (waitMonitor) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            // pretend we're working
+            sleep(1000);
         }
     }
 
     public int getRandomNumber() {
         synchronized (otherMonitor) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            // pretend we're rolling the dice for our random number
+            sleep(500);
             return random.nextInt();
+        }
+    }
+
+    private void sleep(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }
