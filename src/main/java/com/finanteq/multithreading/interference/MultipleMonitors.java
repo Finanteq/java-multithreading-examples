@@ -59,7 +59,7 @@ class SynchronizedWaiting {
         try {
             Thread.sleep(ms);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            // ignore, someone interrupted our sleep, I believe for a good cause
         }
     }
 }
