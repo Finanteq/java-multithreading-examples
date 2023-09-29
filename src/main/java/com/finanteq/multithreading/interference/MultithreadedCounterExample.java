@@ -38,9 +38,7 @@ class Counter {
     private int value = 0;
 
     public void increment() {
-        synchronized (this) {
-            value += 1;
-        }
+        value += 1;
     }
 
     public int getValue() {
